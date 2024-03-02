@@ -2,8 +2,9 @@
 /*created by prashant shukla */
 /* 140 code */
 img = "";
-noseX = 0;
-noseY = 0;
+rightWristX = 0;
+rightWristY = 0;
+Score = "";
 
 function modelLoaded(){
   console.log("Model loaded!");
@@ -12,10 +13,15 @@ function modelLoaded(){
 function gotPoses(results){
   
   if (results.length > 0) {
-    noseX = results[0].pose.nose.x;
-    noseY = results[0].pose.nose.y;
+    console.log(results);
     
-    console.log("Nose x = "+ noseX + "Nose y = " + noseY);
+    rightWristX = results[0].pose.rightWrist.x;
+    rightWristY = results[0].pose.rightWrist.y;
+    Score = results[0].pose.keypoints[10].score;
+
+    console.log(Score);
+    
+    console.log("right wrist x = "+ rightWristX + "right wrist y = " + rightWristY);
   }
 } 
 
@@ -59,6 +65,12 @@ function draw(){
 
  background("#FFFFFF"); 
  image(video, 0, 0, 650,450);
+
+ if(Score > 0.2){
+  fill("red");
+  stroke("red");
+  circle(rightWristX, rightWristY, 25);
+ }
 
  fill("black");
  stroke("black");
